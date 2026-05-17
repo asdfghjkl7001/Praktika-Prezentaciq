@@ -1,0 +1,221 @@
+﻿@{
+    ViewData["Title"] = "Начало";
+}
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">Фото и копирни услуги</span>
+        <h1>Хартиен Обектив</h1>
+        <p>
+            Бързо копиране, принтиране, сканиране, фото продукти и фотосесии —
+            всичко на едно място с удобна онлайн заявка.
+        </p>
+
+        <div class="hero-actions">
+            <a asp-controller="Prodocts" asp-action="Index" class="btn btn-primary">
+                Виж Продуктите
+            </a>
+            <a asp-controller="Services" asp-action="Index" class="btn btn-secondary">
+                Виж услугите
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <div class="photo-preview">
+            <div class="photo photo-one"></div>
+            <div class="photo photo-two"></div>
+            <div class="photo photo-three"></div>
+        </div>
+        <div class="hero-card-info">
+            <strong>Готови поръчки</strong>
+            <span>Принт • Фото • Копиране</span>
+        </div>
+    </div>
+</section>
+
+<section class="quick-info">
+    <div class="info-box">
+        <h3>Бърза изработка</h3>
+        <p>Повечето услуги се изпълняват в кратки срокове.</p>
+    </div>
+
+    <div class="info-box">
+        <h3>Качване на файлове</h3>
+        <p>Прикачи документи или изображения към заявката.</p>
+    </div>
+
+    <div class="info-box">
+        <h3>Актуални цени</h3>
+        <p>Ясна информация за формати, параметри и стойност.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <span>Какво предлагаме</span>
+        <h2>Основни услуги</h2>
+        <p>Избери услуга, разгледай параметрите и направи онлайн заявка.</p>
+    </div>
+
+    <div class="services-grid">
+        <article class="service-card">
+            <div class="service-icon">📄</div>
+            <h3>Копиране</h3>
+            <p>Черно-бяло и цветно копиране на документи в различни формати.</p>
+            <a asp-controller="Services"
+               asp-action="Details"
+               asp-route-id="15"
+               class="btn btn-primary">
+                Виж повече
+            </a>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">🖨️</div>
+            <h3>Принтиране</h3>
+            <p>Печат на документи, проекти, снимки и рекламни материали.</p>
+            <a asp-controller="Services"
+               asp-action="Details"
+               asp-route-id="16"
+               class="btn btn-primary">
+                Виж повече
+            </a>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">📑</div>
+            <h3>Сканиране</h3>
+            <p>Дигитализиране на документи и изображения с високо качество.</p>
+            <a asp-controller="Services"
+               asp-action="Details"
+               asp-route-id="17"
+               class="btn btn-primary">
+                Виж повече
+            </a>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">📸</div>
+            <h3>Фотосесии</h3>
+            <p>Портретни, семейни и тематични фотосесии по предварителна заявка.</p>
+            <a asp-controller="Services"
+               asp-action="Details"
+               asp-route-id="20"
+               class="btn btn-primary">
+                Виж повече
+            </a>
+        </article>
+    </div>
+</section>
+
+<section class="section products-section">
+    <div class="section-heading">
+        <span>Фото продукти</span>
+        <h2>Подаръци със спомен</h2>
+        <p>Фото рамки, албуми, календари, магнити и други персонализирани продукти.</p>
+    </div>
+
+    <div class="products-grid">
+        <article class="product-card">
+            <div class="product-image product-one"></div>
+            <div class="product-content">
+                <h3>Фото рамки</h3>
+                <p>Различни размери и стилове за любимите снимки.</p>
+                <strong>от 8.00 лв.</strong>
+                <a asp-controller="Prodocts"
+                   asp-action="Details"
+                   asp-route-id="11"
+                   class="btn btn-primary">
+                    Виж повече
+                </a>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <div class="product-image product-two"></div>
+            <div class="product-content">
+                <h3>Албуми</h3>
+                <p>Класически и тематични албуми за важни моменти.</p>
+                <strong>от 15.00 лв.</strong>
+                <a asp-controller="Prodocts"
+                   asp-action="Details"
+                   asp-route-id="7"
+                   class="btn btn-primary">
+                    Виж повече
+                </a>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <div class="product-image product-three"></div>
+            <div class="product-content">
+                <h3>Календари</h3>
+                <p>Персонализирани календари със снимки.</p>
+                <strong>от 12.00 лв.</strong>
+                <a asp-controller="Prodocts"
+                   asp-action="Details"
+                   asp-route-id="8"
+                   class="btn btn-primary">
+                    Виж повече
+                </a>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="price-banner">
+    <div>
+        <span>Прозрачни цени</span>
+        <h2>Провери цените преди заявка</h2>
+        <p>Всяка услуга съдържа описание, формати, срок за изпълнение и цена.</p>
+    </div>
+
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Prices">
+        Виж цените
+    </a>
+</section>
+
+<section class="section steps-section">
+    <div class="section-heading">
+        <span>Онлайн заявка</span>
+        <h2>Как работи?</h2>
+    </div>
+
+    <div class="steps">
+        <div class="step">
+            <span>1</span>
+            <h3>Избираш услуга</h3>
+            <p>Избери копиране, принтиране, сканиране или фото продукт.</p>
+        </div>
+
+        <div class="step">
+            <span>2</span>
+            <h3>Задаваш параметри</h3>
+            <p>Посочи формат, брой копия, размер, срок и други детайли.</p>
+        </div>
+
+        <div class="step">
+            <span>3</span>
+            <h3>Прикачваш файлове</h3>
+            <p>Качи нужните документи или изображения към поръчката.</p>
+        </div>
+
+        <div class="step">
+            <span>4</span>
+            <h3>Изпращаш заявка</h3>
+            <p>Администратор обработва заявката и актуализира статуса.</p>
+        </div>
+    </div>
+</section>
+
+<section class="contact-cta">
+    <h2>Имаш въпрос за услуга или продукт?</h2>
+    <p>Свържи се с нас или изпрати онлайн заявка през профила си.</p>
+
+    <div class="hero-actions">
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Contact">
+            Контакти
+        </a>
+    </div>
+</section>

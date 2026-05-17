@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Цени";
+}
+
+<section class="prices-hero">
+    <div class="container">
+        <h1>Цени</h1>
+        <p>
+            Разгледайте актуалните цени за копиране, принтиране,
+            сканиране, фото продукти и фотосесии.
+        </p>
+    </div>
+</section>
+
+<section class="prices-section">
+    <div class="container">
+
+        <h2 class="prices-title">Ценоразпис</h2>
+
+        <div class="prices-grid">
+
+            <div class="price-card">
+                <h3>Копиране</h3>
+                <p class="price">от 0.10 лв.</p>
+                <ul>
+                    <li>Черно-бяло копиране A4</li>
+                    <li>Цветно копиране</li>
+                    <li>Копиране на документи</li>
+                </ul>
+                <a asp-controller="Services" asp-action="Index" class="price-btn">Виж услугите</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Принтиране</h3>
+                <p class="price">от 0.15 лв.</p>
+                <ul>
+                    <li>Принтиране A4</li>
+                    <li>Цветен печат</li>
+                    <li>Печат на документи и изображения</li>
+                </ul>
+                <a asp-controller="Services" asp-action="Index" class="price-btn">Виж услугите</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Сканиране</h3>
+                <p class="price">от 0.30 лв.</p>
+                <ul>
+                    <li>Сканиране на документи</li>
+                    <li>Запис във PDF формат</li>
+                    <li>Изпращане по имейл</li>
+                </ul>
+                <a asp-controller="Services" asp-action="Index" class="price-btn">Виж услугите</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Фото продукти</h3>
+                <p class="price">от 5.00 лв.</p>
+                <ul>
+                    <li>Фото чаши</li>
+                    <li>Фото рамки</li>
+                    <li>Персонализирани подаръци</li>
+                </ul>
+                <a asp-controller="Services" asp-action="Index" class="price-btn">Виж продуктите</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Фотосесии</h3>
+                <p class="price">от 30.00 лв.</p>
+                <ul>
+                    <li>Портретна фотосесия</li>
+                    <li>Семейна фотосесия</li>
+                    <li>Обработка на снимки</li>
+                </ul>
+                <a asp-controller="Services" asp-action="Index" class="price-btn">Виж услугите</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Ламиниране</h3>
+                <p class="price">от 1.50 лв.</p>
+                <ul>
+                    <li>Ламиниране A4</li>
+                    <li>Ламиниране A3</li>
+                    <li>Защита на документи</li>
+                </ul>
+                <a asp-controller="Services" asp-action="Index" class="price-btn">Виж услугите</a>
+            </div>
+
+        </div>
+    </div>
+</section>

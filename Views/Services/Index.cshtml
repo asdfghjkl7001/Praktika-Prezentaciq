@@ -1,0 +1,427 @@
+@using System.Linq
+@model IEnumerable<foto4.Data.Service>
+
+@{
+    ViewData["Title"] = "Услуги";
+
+    var sortOrder = Context.Request.Query["sortOrder"].ToString();
+    var categoryFilter = Context.Request.Query["category"].ToString();
+    var services = Model ?? Enumerable.Empty<foto4.Data.Service>();
+
+    var categoryNames = services
+        .Where(s => s.Categories != null && !string.IsNullOrWhiteSpace(s.Categories.Name))
+        .Select(s => s.Categories.Name)
+        .Distinct()
+        .OrderBy(c => c)
+        .ToList();
+
+    var filteredServices = string.IsNullOrWhiteSpace(categoryFilter)
+        ? services
+        : services.Where(s => s.Categories != null && s.Categories.Name == categoryFilter);
+
+    var sortedServices = sortOrder switch
+    {
+        "name_desc" => filteredServices.OrderByDescending(s => s.Name).ToList(),
+        "category_asc" => filteredServices.OrderBy(s => s.Categories != null ? s.Categories.Name : "").ToList(),
+        "category_desc" => filteredServices.OrderByDescending(s => s.Categories != null ? s.Categories.Name : "").ToList(),
+        "price_asc" => filteredServices.OrderBy(s => s.Price).ToList(),
+        "price_desc" => filteredServices.OrderByDescending(s => s.Price).ToList(),
+        "duration_asc" => filteredServices.OrderBy(s => s.DurationInDays).ToList(),
+        "duration_desc" => filteredServices.OrderByDescending(s => s.DurationInDays).ToList(),
+        _ => filteredServices.OrderBy(s => s.Name).ToList()
+    };
+}
+
+<section class="services-hero">
+    <div class="container">
+        <h1>Нашите услуги</h1>
+        <p>
+            Разгледайте предлаганите фото и копирни услуги, техните категории, описания и цени.
+        </p>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn-add">+ Добави услуга</a>
+        }
+    </div>
+</section>
+
+<section class="services-section">
+    <div class="container">
+        <form method="get" class="sort-form">
+            <div class="filter-group">
+                <label for="category">Избери категория:</label>
+                <select name="category" id="category">
+                    <option value="" selected="@(string.IsNullOrWhiteSpace(categoryFilter))">Всички категории</option>
+                    @foreach (var categoryName in categoryNames)
+                    {
+                        <option value="@categoryName" selected="@(categoryFilter == categoryName)">@categoryName</option>
+                    }
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="sortOrder">Сортирай по:</label>
+                <select name="sortOrder" id="sortOrder">
+                    <option value="name_asc" selected="@(sortOrder == "" || sortOrder == "name_asc")">Име: А - Я</option>
+                    <option value="name_desc" selected="@(sortOrder == "name_desc")">Име: Я - А</option>
+                    <option value="category_asc" selected="@(sortOrder == "category_asc")">Категория: А - Я</option>
+                    <option value="category_desc" selected="@(sortOrder == "category_desc")">Категория: Я - А</option>
+                    <option value="price_asc" selected="@(sortOrder == "price_asc")">Цена: ниска към висока</option>
+                    <option value="price_desc" selected="@(sortOrder == "price_desc")">Цена: висока към ниска</option>
+                    <option value="duration_asc" selected="@(sortOrder == "duration_asc")">Срок: кратък към дълъг</option>
+                    <option value="duration_desc" selected="@(sortOrder == "duration_desc")">Срок: дълъг към кратък</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-sort">Покажи</button>
+
+            @if (!string.IsNullOrWhiteSpace(categoryFilter))
+            {
+                <a asp-action="Index" class="btn-clear-filter">Изчисти филтъра</a>
+            }
+        </form>
+
+        @if (!sortedServices.Any())
+        {
+            <div class="empty-box">
+                @(string.IsNullOrWhiteSpace(categoryFilter)
+                            ? "Няма добавени услуги."
+                            : $"Няма услуги в категория „{categoryFilter}“.")
+        </div>
+                }
+        else
+        {
+            <div class="services-grid">
+                @foreach (var service in sortedServices)
+                {
+                    <div class="service-card">
+                        <div class="service-top">
+                            <span class="service-category">
+                                @(service.Categories != null ? service.Categories.Name : "Без категория")
+                            </span>
+                            <span class="service-date">
+                                Срок: @service.DurationInDays дни
+                            </span>
+                        </div>
+
+                        <h3>@service.Name</h3>
+
+                        <p class="service-description">
+                            @(string.IsNullOrWhiteSpace(service.Description)
+                                                ? "Няма добавено описание за тази услуга."
+                                                : service.Description)
+                </p>
+
+                @if (!string.IsNullOrWhiteSpace(service.Format))
+                        {
+                            <div class="service-format">
+                                <strong>Формат:</strong> @service.Format
+                            </div>
+                        }
+
+                        <div class="service-price">
+                            @service.Price.ToString("0.00") лв.
+                        </div>
+
+                        <div class="service-actions">
+                            <a asp-controller="Services"
+                               asp-action="Details"
+                               asp-route-id="@service.Id"
+                               class="btn-details">
+                                Детайли
+                            </a>
+
+                            <a asp-controller="Services"
+                               asp-action="SubmitRequest"
+                               asp-route-id="@service.Id"
+                               class="btn-request">
+                                Подай заявка
+                            </a>
+
+                            @if (User.IsInRole("Admin") && service.Id > 0)
+                            {
+                                <a asp-action="Edit" asp-route-id="@service.Id" class="btn-admin">Редактирай</a>
+                                <a asp-action="Delete" asp-route-id="@service.Id" class="btn-delete">Изтрий</a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .services-hero {
+        background: linear-gradient(135deg, #111827, #374151);
+        color: white;
+        padding: 70px 20px;
+        text-align: center;
+        border-radius: 0 0 35px 35px;
+    }
+
+        .services-hero h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .services-hero p {
+            font-size: 18px;
+            color: #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+    .services-section {
+        padding: 60px 20px;
+        background-color: #f9fafb;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .sort-form {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .sort-form label {
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .sort-form select {
+        min-width: 240px;
+        padding: 11px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        background: white;
+        color: #111827;
+        font-weight: 600;
+        outline: none;
+    }
+
+        .sort-form select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+    .btn-sort {
+        border: none;
+        background: #2563eb;
+        color: white;
+        padding: 11px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-sort:hover {
+            background: #1d4ed8;
+        }
+
+    .btn-clear-filter {
+        display: inline-block;
+        background: #f3f4f6;
+        color: #374151;
+        padding: 11px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .btn-clear-filter:hover {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+    .empty-box {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        color: #4b5563;
+        font-weight: 600;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+
+    .service-card {
+        background: white;
+        padding: 28px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        transition: 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        min-height: 280px;
+    }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+    .service-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .service-category {
+        background: #dbeafe;
+        color: #1d4ed8;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .service-date {
+        color: #6b7280;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .service-card h3 {
+        font-size: 24px;
+        color: #111827;
+        margin-bottom: 12px;
+    }
+
+    .service-description {
+        color: #4b5563;
+        line-height: 1.6;
+        margin-bottom: 14px;
+        flex: 1;
+    }
+
+    .service-format {
+        color: #374151;
+        background: #f3f4f6;
+        border-radius: 12px;
+        padding: 10px 12px;
+        margin-bottom: 14px;
+        line-height: 1.5;
+    }
+
+    .service-price {
+        font-size: 24px;
+        font-weight: 800;
+        color: #16a34a;
+        margin-bottom: 18px;
+    }
+
+    .service-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: auto;
+    }
+
+    .btn-details,
+    .btn-request,
+    .btn-add,
+    .btn-admin,
+    .btn-delete {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-details {
+        border: 1px solid #2563eb;
+        color: #2563eb;
+        background: white;
+    }
+
+        .btn-details:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+    .btn-request,
+    .btn-add {
+        background: #16a34a;
+        color: white;
+    }
+
+        .btn-request:hover,
+        .btn-add:hover {
+            background: #15803d;
+            color: white;
+        }
+
+    .btn-admin {
+        background: #f59e0b;
+        color: white;
+    }
+
+        .btn-admin:hover {
+            background: #d97706;
+            color: white;
+        }
+
+    .btn-delete {
+        background: #dc2626;
+        color: white;
+    }
+
+        .btn-delete:hover {
+            background: #b91c1c;
+            color: white;
+        }
+
+    @@media (max-width: 768px) {
+        .services-hero h1 {
+            font-size: 34px;
+        }
+
+        .services-hero p {
+            font-size: 16px;
+        }
+
+        .sort-form {
+            justify-content: stretch;
+        }
+
+            .filter-group,
+            .sort-form select,
+            .btn-sort,
+            .btn-clear-filter {
+                width: 100%;
+            }
+    }
+</style>

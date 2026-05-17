@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Контакти";
+}
+
+<section class="contact-hero">
+    <div class="container">
+        <h1>Свържете се с нас</h1>
+        <p>
+            Имате въпрос за копиране, принтиране, сканиране, фото продукти или заявка?
+            Изпратете ни съобщение.
+        </p>
+    </div>
+</section>
+
+<section class="contact-section">
+    <div class="container contact-grid">
+
+        <div class="contact-info">
+            <h2>Хартиен Обектив</h2>
+            <p>Платформа за фото и копирни услуги.</p>
+
+            <div class="contact-card">
+                <h4>Адрес</h4>
+                <p>гр. Сопот, ул. „Иван Вазов“ №1</p>
+            </div>
+
+            <div class="contact-card">
+                <h4>Телефон</h4>
+                <p>+359 888 123 456</p>
+            </div>
+
+            <div class="contact-card">
+                <h4>Имейл</h4>
+                <p>contact@hartien-obektiv.bg</p>
+            </div>
+
+            <div class="contact-card">
+                <h4>Работно време</h4>
+                <p>Понеделник - Петък: 09:00 - 18:00</p>
+                <p>Събота: 10:00 - 14:00</p>
+            </div>
+        </div>
+
+        <div class="contact-form-box">
+            <h2>Изпратете съобщение</h2>
+
+            @if (TempData["ContactSuccess"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["ContactSuccess"]
+                </div>
+            }
+
+            <form asp-controller="Home" asp-action="Contact" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label for="name">Име</label>
+                    <input type="text" id="name" name="name" required placeholder="Вашето име" />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Имейл</label>
+                    <input type="email" id="email" name="email" required placeholder="example@email.com" />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="text" id="phone" name="phone" placeholder="Вашият телефон" />
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Съобщение</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Напишете съобщение..."></textarea>
+                </div>
+
+                <button type="submit" class="contact-btn">Изпрати</button>
+            </form>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,779 @@
+@model foto4.Data.Prodoct
+
+@{
+    ViewData["Title"] = "Заявка за фото продукт";
+    var categoryName = Model.Category != null ? Model.Category.Name : "Фото продукт";
+    var createdDate = Model.CreateAt == default ? "Няма дата" : Model.CreateAt.ToString("dd.MM.yyyy");
+}
+
+<div class="request-page">
+    <div class="request-box">
+        <div class="request-header">
+            <span class="request-badge">Заявка за фото продукт</span>
+            <h1>Подаване на заявка</h1>
+            <p>
+                Попълнете данните си, изберете размер/вариант, брой и прикачете снимки
+                за изработка на избрания фото продукт.
+            </p>
+        </div>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="success-message">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="error-message">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <div class="product-summary">
+            <div class="product-image-placeholder">
+                <span>📷</span>
+            </div>
+
+            <div class="product-summary-content">
+                <span class="category-pill">@categoryName</span>
+                <h2>@Model.Name</h2>
+                <p>@Model.Description</p>
+
+                <div class="summary-grid">
+                    <div>
+                        <span>Категория</span>
+                        <strong>@categoryName</strong>
+                    </div>
+
+                    <div>
+                        <span>Цена</span>
+                        <strong>@Model.Price.ToString("0.00") лв.</strong>
+                    </div>
+
+                    <div>
+                        <span>Добавен</span>
+                        <strong>@createdDate</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form id="requestForm"
+              asp-controller="Prodocts"
+              asp-action="SubmitRequest"
+              asp-route-id="@Model.Id"
+              method="post"
+              enctype="multipart/form-data">
+
+            @Html.AntiForgeryToken()
+
+            <!-- Данни за фото продукта -->
+            <input type="hidden" name="ProdoctId" value="@Model.Id" />
+            <input type="hidden" name="ProductId" value="@Model.Id" />
+            <input type="hidden" name="ProductName" value="@Model.Name" />
+            <input type="hidden" name="ItemType" value="Фото продукт" />
+            <input type="hidden" id="Staus" name="Staus" value="Нова заявка за фото продукт" />
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="ClientName">Вашето име</label>
+                    <input id="ClientName"
+                           name="ClientName"
+                           class="form-control"
+                           placeholder="Въведете име"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label for="Contact">Телефон или имейл</label>
+                    <input id="Contact"
+                           name="Contact"
+                           class="form-control"
+                           placeholder="Въведете телефон или имейл"
+                           required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Parameters">Детайли към фото продукта</label>
+                <textarea id="Parameters"
+                          name="Parameters"
+                          class="form-control"
+                          rows="5"
+                          placeholder="Например: надпис върху продукта, цвят, разположение на снимката, специални изисквания..."></textarea>
+            </div>
+
+            <div class="form-group size-count-box">
+                <label class="form-label">Вариант и брой</label>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="SelectedSize">Размер / вариант</label>
+                        <select id="SelectedSize" class="form-control" required>
+                            <option value="10x15 см" selected>10x15 см</option>
+                            <option value="13x18 см">13x18 см</option>
+                            <option value="15x21 см">15x21 см</option>
+                            <option value="20x30 см">20x30 см</option>
+                            <option value="A4">A4</option>
+                            <option value="A3">A3</option>
+                            <option value="Чаша">Чаша</option>
+                            <option value="Тениска S">Тениска S</option>
+                            <option value="Тениска M">Тениска M</option>
+                            <option value="Тениска L">Тениска L</option>
+                            <option value="Тениска XL">Тениска XL</option>
+                            <option value="Друг вариант">Друг вариант</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="CopiesCount">Брой</label>
+                        <input id="CopiesCount"
+                               type="number"
+                               class="form-control"
+                               min="1"
+                               value="1"
+                               required
+                               placeholder="Въведете брой" />
+                    </div>
+                </div>
+
+                <div id="CustomSizeBox" class="form-group" style="display:none;">
+                    <label for="CustomSize">Въведете размер / вариант</label>
+                    <input id="CustomSize"
+                           type="text"
+                           class="form-control"
+                           placeholder="Например: календар A4, тениска XXL, рамка 30x40 см..." />
+                </div>
+            </div>
+
+            <div class="form-group receive-box">
+                <label class="form-label">Начин на получаване</label>
+
+                <div class="receive-options">
+                    <label class="receive-option">
+                        <input type="radio" name="ReceiveMethod" value="Вземане от място" />
+                        <span>Ще взема от място</span>
+                    </label>
+
+                    <label class="receive-option">
+                        <input type="radio" name="ReceiveMethod" value="Доставка" checked />
+                        <span>Искам доставка</span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="deliveryFields" class="delivery-fields" style="display:none;">
+                <div class="form-group">
+                    <label for="DeliveryAddress">Адрес за доставка</label>
+                    <textarea id="DeliveryAddress"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Въведете адрес за доставка"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="DeliveryPhone">Телефон за доставка</label>
+                    <input id="DeliveryPhone"
+                           type="text"
+                           class="form-control"
+                           placeholder="Въведете телефон за доставка" />
+                </div>
+            </div>
+
+            <div id="paymentSection" class="form-group payment-box">
+                <label class="form-label">Начин на плащане</label>
+
+                <div class="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="PaymentMethod" value="С карта" checked />
+                        <span>С карта</span>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="PaymentMethod" value="Банков превод" />
+                        <span>Банков превод</span>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="PaymentMethod" value="При доставка" />
+                        <span>При доставка</span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="cardFields" class="card-fields">
+                <p class="card-note">
+                    Данните за картата са само визуални за учебния проект. Пълният номер и CVV не се изпращат към заявката.
+                </p>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="CardHolderName">Име на картодържател</label>
+                        <input id="CardHolderName"
+                               type="text"
+                               class="form-control"
+                               placeholder="Например: Nikola Salchev" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="CardNumber">Пълен номер на карта</label>
+                        <input id="CardNumber"
+                               type="text"
+                               class="form-control"
+                               maxlength="19"
+                               pattern="[0-9 ]{13,19}"
+                               inputmode="numeric"
+                               autocomplete="off"
+                               placeholder="0000 0000 0000 0000" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="CardExpiry">Валидност</label>
+                        <input id="CardExpiry"
+                               type="text"
+                               class="form-control"
+                               maxlength="5"
+                               pattern="[0-9]{2}/[0-9]{2}"
+                               inputmode="numeric"
+                               autocomplete="off"
+                               placeholder="MM/YY" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="CardCvv">CVV</label>
+                        <input id="CardCvv"
+                               type="password"
+                               class="form-control"
+                               maxlength="4"
+                               pattern="[0-9]{3,4}"
+                               inputmode="numeric"
+                               autocomplete="off"
+                               placeholder="***" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Прикачване на снимки / файлове</label>
+
+                <label class="file-upload-box" for="UploadedFiles">
+                    <span class="file-icon">🖼️</span>
+                    <strong>Избери снимки за продукта</strong>
+                    <small>JPG, PNG, PDF или друг файл с дизайн за изработка</small>
+                </label>
+
+                <input id="UploadedFiles"
+                       name="UploadedFiles"
+                       type="file"
+                       class="file-input"
+                       accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt"
+                       multiple />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    Подай заявка
+                </button>
+
+                <a asp-controller="Prodocts"
+                   asp-action="Details"
+                   asp-route-id="@Model.Id"
+                   class="btn-details">
+                    Назад към детайлите
+                </a>
+
+                <a asp-controller="Prodocts"
+                   asp-action="Index"
+                   class="btn-back">
+                    Всички фото продукти
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const requestForm = document.getElementById('requestForm');
+        const parametersInput = document.getElementById('Parameters');
+        const stausInput = document.getElementById('Staus');
+        const radios = document.querySelectorAll('input[name="ReceiveMethod"]');
+        const paymentRadios = document.querySelectorAll('input[name="PaymentMethod"]');
+        const deliveryFields = document.getElementById('deliveryFields');
+        const paymentSection = document.getElementById('paymentSection');
+        const deliveryAddress = document.getElementById('DeliveryAddress');
+        const deliveryPhone = document.getElementById('DeliveryPhone');
+        const cardFields = document.getElementById('cardFields');
+        const cardHolderName = document.getElementById('CardHolderName');
+        const cardNumber = document.getElementById('CardNumber');
+        const cardExpiry = document.getElementById('CardExpiry');
+        const cardCvv = document.getElementById('CardCvv');
+        const selectedSize = document.getElementById('SelectedSize');
+        const copiesCount = document.getElementById('CopiesCount');
+        const customSizeBox = document.getElementById('CustomSizeBox');
+        const customSize = document.getElementById('CustomSize');
+        const productName = document.querySelector('input[name="ProductName"]').value;
+
+        function toggleCustomSize() {
+            const isCustomSize = selectedSize.value === 'Друг вариант';
+
+            customSizeBox.style.display = isCustomSize ? 'block' : 'none';
+            customSize.required = isCustomSize;
+
+            if (!isCustomSize) {
+                customSize.value = '';
+            }
+        }
+
+        function toggleDeliveryFields() {
+            const selectedMethod = document.querySelector('input[name="ReceiveMethod"]:checked').value;
+            const isDelivery = selectedMethod === 'Доставка';
+
+            deliveryFields.style.display = isDelivery ? 'block' : 'none';
+            paymentSection.style.display = isDelivery ? 'block' : 'none';
+
+            deliveryAddress.required = isDelivery;
+            deliveryPhone.required = isDelivery;
+
+            if (!isDelivery) {
+                deliveryAddress.value = '';
+                deliveryPhone.value = '';
+                cardHolderName.value = '';
+                cardNumber.value = '';
+                cardExpiry.value = '';
+                cardCvv.value = '';
+            }
+
+            toggleCardFields();
+        }
+
+        function toggleCardFields() {
+            const selectedMethod = document.querySelector('input[name="ReceiveMethod"]:checked').value;
+            const selectedPayment = document.querySelector('input[name="PaymentMethod"]:checked').value;
+            const isDelivery = selectedMethod === 'Доставка';
+            const isCard = isDelivery && selectedPayment === 'С карта';
+
+            cardFields.style.display = isCard ? 'block' : 'none';
+            cardHolderName.required = isCard;
+            cardNumber.required = isCard;
+            cardExpiry.required = isCard;
+            cardCvv.required = isCard;
+
+            if (!isCard) {
+                cardHolderName.value = '';
+                cardNumber.value = '';
+                cardExpiry.value = '';
+                cardCvv.value = '';
+            }
+        }
+
+        selectedSize.addEventListener('change', toggleCustomSize);
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', toggleDeliveryFields);
+        });
+
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', toggleCardFields);
+        });
+
+        requestForm.addEventListener('submit', function () {
+            const selectedMethod = document.querySelector('input[name="ReceiveMethod"]:checked').value;
+            const selectedPayment = document.querySelector('input[name="PaymentMethod"]:checked').value;
+            const sizeText = selectedSize.value === 'Друг вариант' ? customSize.value : selectedSize.value;
+            const cleanCardNumber = cardNumber.value.replace(/\D/g, '');
+            const lastFour = cleanCardNumber.length >= 4 ? cleanCardNumber.slice(-4) : '';
+
+            let extraText = "\n\nТип: Фото продукт";
+            extraText += "\nПродукт: " + productName;
+            extraText += "\nВариант/размер: " + sizeText;
+            extraText += "\nБрой: " + copiesCount.value;
+            extraText += "\nНачин на получаване: " + selectedMethod;
+
+            if (selectedMethod === 'Доставка') {
+                extraText += "\nАдрес за доставка: " + deliveryAddress.value;
+                extraText += "\nТелефон за доставка: " + deliveryPhone.value;
+                extraText += "\nНачин на плащане: " + selectedPayment;
+
+                if (selectedPayment === 'С карта') {
+                    extraText += "\nИме на картодържател: " + cardHolderName.value;
+
+                    if (lastFour) {
+                        extraText += "\nПоследни 4 цифри на карта: " + lastFour;
+                    }
+
+                    extraText += "\nПълният номер на карта и CVV не се записват.";
+                }
+            }
+
+            if (!parametersInput.value.includes('Тип: Фото продукт')) {
+                parametersInput.value += extraText;
+            }
+
+            if (stausInput) {
+                stausInput.value = 'Нова заявка за фото продукт' + extraText;
+            }
+
+            cardNumber.value = '';
+            cardExpiry.value = '';
+            cardCvv.value = '';
+        });
+
+        toggleCustomSize();
+        toggleDeliveryFields();
+        toggleCardFields();
+    </script>
+}
+
+<style>
+    .request-page {
+        min-height: 80vh;
+        padding: 60px 20px;
+        background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 45%, #fff7ed 100%);
+    }
+
+    .request-box {
+        max-width: 950px;
+        margin: 0 auto;
+        background: white;
+        padding: 36px;
+        border-radius: 28px;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+        border: 1px solid #e5e7eb;
+    }
+
+    .request-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .request-badge {
+        display: inline-block;
+        background: #eff6ff;
+        color: #2563eb;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-weight: 800;
+        margin-bottom: 14px;
+    }
+
+    .request-header h1 {
+        color: #111827;
+        font-size: 38px;
+        font-weight: 900;
+        margin-bottom: 10px;
+    }
+
+    .request-header p {
+        color: #4b5563;
+        max-width: 690px;
+        margin: 0 auto;
+        line-height: 1.7;
+    }
+
+    .success-message {
+        background: #ecfdf5;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+        padding: 15px 18px;
+        border-radius: 14px;
+        font-weight: 700;
+        margin-bottom: 22px;
+    }
+
+
+    .error-message {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 14px 16px;
+        border-radius: 14px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        border: 1px solid #fecaca;
+    }
+    .product-summary {
+        display: grid;
+        grid-template-columns: 230px 1fr;
+        gap: 24px;
+        background: #f8fafc;
+        padding: 24px;
+        border-radius: 22px;
+        margin-bottom: 28px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .product-image-placeholder {
+        min-height: 220px;
+        border-radius: 20px;
+        background: radial-gradient(circle at top, #dbeafe, #f1f5f9);
+        border: 2px dashed #93c5fd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .product-image-placeholder span {
+        font-size: 64px;
+    }
+
+    .category-pill {
+        display: inline-block;
+        background: #fff7ed;
+        color: #c2410c;
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .product-summary h2 {
+        color: #111827;
+        font-weight: 900;
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .product-summary p {
+        color: #4b5563;
+        line-height: 1.7;
+        margin-bottom: 18px;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .summary-grid div {
+        background: white;
+        padding: 16px;
+        border-radius: 14px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .summary-grid span {
+        display: block;
+        color: #6b7280;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .summary-grid strong {
+        color: #111827;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 13px;
+        font-size: 15px;
+        outline: none;
+        transition: 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .receive-box,
+    .payment-box,
+    .size-count-box {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .receive-options,
+    .payment-options {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .receive-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .receive-option,
+    .payment-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 14px;
+        padding: 14px 16px;
+        cursor: pointer;
+        font-weight: 800;
+        color: #111827;
+        transition: 0.3s ease;
+    }
+
+    .receive-option:hover,
+    .payment-option:hover {
+        border-color: #2563eb;
+        background: #eff6ff;
+    }
+
+    .receive-option input,
+    .payment-option input {
+        accent-color: #2563eb;
+    }
+
+    .delivery-fields,
+    .card-fields {
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        padding: 18px;
+        border-radius: 18px;
+        margin-bottom: 20px;
+    }
+
+    .card-note {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #9a3412;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    .file-upload-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-height: 145px;
+        border: 2px dashed #93c5fd;
+        background: #eff6ff;
+        border-radius: 20px;
+        cursor: pointer;
+        text-align: center;
+        transition: 0.3s ease;
+        color: #1d4ed8;
+    }
+
+    .file-upload-box:hover {
+        background: #dbeafe;
+        border-color: #2563eb;
+        transform: translateY(-2px);
+    }
+
+    .file-icon {
+        font-size: 36px;
+    }
+
+    .file-upload-box strong {
+        font-size: 18px;
+    }
+
+    .file-upload-box small {
+        color: #4b5563;
+    }
+
+    .file-input {
+        margin-top: 12px;
+        width: 100%;
+    }
+
+    .form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .btn-submit,
+    .btn-details,
+    .btn-back {
+        display: inline-block;
+        border: none;
+        padding: 13px 20px;
+        border-radius: 13px;
+        font-weight: 900;
+        text-decoration: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .btn-submit {
+        background: #16a34a;
+        color: white;
+    }
+
+    .btn-submit:hover {
+        background: #15803d;
+        transform: translateY(-2px);
+    }
+
+    .btn-details {
+        background: white;
+        color: #2563eb;
+        border: 1px solid #2563eb;
+    }
+
+    .btn-details:hover {
+        background: #2563eb;
+        color: white;
+    }
+
+    .btn-back {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    .btn-back:hover {
+        background: #e5e7eb;
+        color: #111827;
+    }
+
+    @@media (max-width: 850px) {
+        .product-summary {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width: 700px) {
+        .request-box {
+            padding: 24px;
+        }
+
+        .request-header h1 {
+            font-size: 30px;
+        }
+
+        .summary-grid,
+        .form-grid,
+        .receive-options,
+        .payment-options {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

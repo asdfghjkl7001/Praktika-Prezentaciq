@@ -1,0 +1,474 @@
+﻿@using System.Linq
+@model IEnumerable<foto4.Data.Prodoct>
+
+@{
+    ViewData["Title"] = "Фото продукти";
+
+    var sortOrder = Context.Request.Query["sortOrder"].ToString();
+    var selectedCategory = Context.Request.Query["category"].ToString();
+    var products = Model ?? Enumerable.Empty<foto4.Data.Prodoct>();
+
+    var categories = products
+        .Where(p => p.Category != null && !string.IsNullOrWhiteSpace(p.Category.Name))
+        .Select(p => p.Category.Name)
+        .Distinct()
+        .OrderBy(c => c)
+        .ToList();
+
+    var filteredProducts = string.IsNullOrWhiteSpace(selectedCategory)
+        ? products
+        : products.Where(p => p.Category != null && p.Category.Name == selectedCategory);
+
+    var sortedProducts = sortOrder switch
+    {
+        "name_desc" => filteredProducts.OrderByDescending(p => p.Name).ToList(),
+        "category_asc" => filteredProducts.OrderBy(p => p.Category != null ? p.Category.Name : "").ToList(),
+        "category_desc" => filteredProducts.OrderByDescending(p => p.Category != null ? p.Category.Name : "").ToList(),
+        "price_asc" => filteredProducts.OrderBy(p => p.Price).ToList(),
+        "price_desc" => filteredProducts.OrderByDescending(p => p.Price).ToList(),
+        "date_asc" => filteredProducts.OrderBy(p => p.CreateAt).ToList(),
+        "date_desc" => filteredProducts.OrderByDescending(p => p.CreateAt).ToList(),
+        _ => filteredProducts.OrderBy(p => p.Name).ToList()
+    };
+}
+
+<section class="products-hero">
+    <div class="container">
+        <h1>Фото продукти</h1>
+        <p>
+            Разгледайте предлаганите фото продукти, техните категории, описания и цени.
+        </p>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn-add">+ Добави фото продукт</a>
+        }
+    </div>
+</section>
+
+<section class="products-section">
+    <div class="container">
+        <form method="get" asp-action="Index" class="sort-form">
+            <div class="filter-group">
+                <label for="category">Категория:</label>
+                <select name="category" id="category">
+                    <option value="" selected="@(string.IsNullOrWhiteSpace(selectedCategory))">Всички категории</option>
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category" selected="@(selectedCategory == category)">@category</option>
+                    }
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="sortOrder">Сортирай по:</label>
+                <select name="sortOrder" id="sortOrder">
+                    <option value="name_asc" selected="@(sortOrder == "" || sortOrder == "name_asc")">Име: А - Я</option>
+                    <option value="name_desc" selected="@(sortOrder == "name_desc")">Име: Я - А</option>
+                    <option value="category_asc" selected="@(sortOrder == "category_asc")">Категория: А - Я</option>
+                    <option value="category_desc" selected="@(sortOrder == "category_desc")">Категория: Я - А</option>
+                    <option value="price_asc" selected="@(sortOrder == "price_asc")">Цена: ниска към висока</option>
+                    <option value="price_desc" selected="@(sortOrder == "price_desc")">Цена: висока към ниска</option>
+                    <option value="date_desc" selected="@(sortOrder == "date_desc")">Най-нови първо</option>
+                    <option value="date_asc" selected="@(sortOrder == "date_asc")">Най-стари първо</option>
+                </select>
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit" class="btn-sort">Покажи</button>
+                <a asp-action="Index" class="btn-clear">Изчисти</a>
+            </div>
+        </form>
+
+        @if (!string.IsNullOrWhiteSpace(selectedCategory))
+        {
+            <div class="active-filter">
+                Избрана категория: <strong>@selectedCategory</strong>
+            </div>
+        }
+
+        @if (!sortedProducts.Any())
+        {
+            <div class="empty-box">
+                @if (!string.IsNullOrWhiteSpace(selectedCategory))
+                {
+                    <span>Няма добавени фото продукти в избраната категория.</span>
+                }
+                else
+                {
+                    <span>Няма добавени фото продукти.</span>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="products-grid">
+                @foreach (var product in sortedProducts)
+                {
+                    var productImageUrl = Url.Content($"~/images/products/{product.Id}.png");
+                    var placeholderImageUrl = Url.Content("~/images/products/default-product.png");
+
+                    <div class="product-card">
+                        <div class="product-image-box">
+                            <img src="@productImageUrl"
+                                 alt="Снимка на @product.Name"
+                                 class="product-image"
+                                 onerror="this.onerror=null; this.src='@placeholderImageUrl';" />
+                        </div>
+
+                        <div class="product-top">
+                            <span class="product-category">
+                                @(product.Category != null ? product.Category.Name : "Без категория")
+                            </span>
+                            <span class="product-date">
+                                @product.CreateAt.ToString("dd.MM.yyyy")
+                            </span>
+                        </div>
+
+                        <h3>@product.Name</h3>
+
+                        <p class="product-description">
+                            @(string.IsNullOrWhiteSpace(product.Description)
+                                                ? "Няма добавено описание за този фото продукт."
+                                                : product.Description)
+                </p>
+
+                        <div class="product-price">
+                            @product.Price.ToString("0.00") лв.
+                        </div>
+
+                        <div class="product-actions">
+                            <a asp-action="Details"
+                               asp-route-id="@product.Id"
+                               class="btn-details">
+                                Детайли
+                            </a>
+
+                            <a asp-action="SubmitRequest"
+                               asp-route-id="@product.Id"
+                               class="btn-request">
+                                Подай заявка
+                            </a>
+
+                    @if (User.IsInRole("Admin") && product.Id > 0)
+                            {
+                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn-admin">Редактирай</a>
+                                <a asp-action="Delete" asp-route-id="@product.Id" class="btn-delete">Изтрий</a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .products-hero {
+        background: linear-gradient(135deg, #111827, #374151);
+        color: white;
+        padding: 70px 20px;
+        text-align: center;
+        border-radius: 0 0 35px 35px;
+    }
+
+        .products-hero h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .products-hero p {
+            font-size: 18px;
+            color: #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+    .products-section {
+        padding: 60px 20px;
+        background-color: #f9fafb;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .sort-form {
+        display: flex;
+        align-items: end;
+        justify-content: flex-end;
+        gap: 14px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+        .filter-group label {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .filter-group select {
+            min-width: 240px;
+            padding: 11px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            background: white;
+            color: #111827;
+            font-weight: 600;
+            outline: none;
+        }
+
+            .filter-group select:focus {
+                border-color: #2563eb;
+                box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn-sort {
+        border: none;
+        background: #2563eb;
+        color: white;
+        padding: 11px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-sort:hover {
+            background: #1d4ed8;
+        }
+
+    .btn-clear {
+        display: inline-block;
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        padding: 11px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .btn-clear:hover {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+    .active-filter {
+        margin-bottom: 20px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1e40af;
+        border-radius: 14px;
+        padding: 12px 16px;
+        font-weight: 600;
+    }
+
+    .empty-box {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        color: #4b5563;
+        font-weight: 600;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+
+    .product-card {
+        background: white;
+        padding: 22px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        transition: 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        min-height: 280px;
+        overflow: hidden;
+    }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+    .product-image-box {
+        width: 100%;
+        height: 210px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #f3f4f6;
+        margin-bottom: 18px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.04);
+    }
+
+    .product-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .product-category {
+        background: #dbeafe;
+        color: #1d4ed8;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .product-date {
+        color: #6b7280;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .product-card h3 {
+        font-size: 24px;
+        color: #111827;
+        margin-bottom: 12px;
+    }
+
+    .product-description {
+        color: #4b5563;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        flex: 1;
+    }
+
+    .product-price {
+        font-size: 24px;
+        font-weight: 800;
+        color: #16a34a;
+        margin-bottom: 18px;
+    }
+
+    .product-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: auto;
+    }
+
+    .btn-details,
+    .btn-request,
+    .btn-add,
+    .btn-admin,
+    .btn-delete {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-details {
+        border: 1px solid #2563eb;
+        color: #2563eb;
+        background: white;
+    }
+
+        .btn-details:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+    .btn-request,
+    .btn-add {
+        background: #16a34a;
+        color: white;
+    }
+
+        .btn-request:hover,
+        .btn-add:hover {
+            background: #15803d;
+            color: white;
+        }
+
+    .btn-admin {
+        background: #f59e0b;
+        color: white;
+    }
+
+        .btn-admin:hover {
+            background: #d97706;
+            color: white;
+        }
+
+    .btn-delete {
+        background: #dc2626;
+        color: white;
+    }
+
+        .btn-delete:hover {
+            background: #b91c1c;
+            color: white;
+        }
+
+    @@media (max-width: 768px) {
+        .products-hero h1 {
+            font-size: 34px;
+        }
+
+        .products-hero p {
+            font-size: 16px;
+        }
+
+        .sort-form {
+            justify-content: stretch;
+        }
+
+        .filter-group,
+        .filter-actions,
+        .filter-group select,
+        .btn-sort,
+        .btn-clear {
+            width: 100%;
+        }
+
+        .product-image-box {
+            height: 190px;
+        }
+    }
+</style>

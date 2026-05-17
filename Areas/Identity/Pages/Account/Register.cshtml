@@ -1,0 +1,126 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<link rel="stylesheet" href="~/css/identity-design.css" asp-append-version="true" />
+
+<div class="identity-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="identity-card">
+                    <div class="row g-0">
+                        <div class="col-lg-5">
+                            <div class="identity-side">
+                                <div class="identity-badge">
+                                    📸 Хартиен Обектив
+                                </div>
+
+                                <h1>Създай клиентски профил</h1>
+
+                                <p>
+                                    Регистрирай се, за да подаваш заявки за принтиране,
+                                    копиране, сканиране, фото продукти и фотосесии.
+                                </p>
+
+                                <div class="identity-feature">
+                                    <span>✓</span>
+                                    <div>Онлайн заявки за услуги</div>
+                                </div>
+
+                                <div class="identity-feature">
+                                    <span>✓</span>
+                                    <div>Прикачване на документи и снимки</div>
+                                </div>
+
+                                <div class="identity-feature">
+                                    <span>✓</span>
+                                    <div>Проследяване на клиентски заявки</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <div class="identity-form">
+                                <h2>Регистрация</h2>
+                                <p class="subtitle">
+                                    Създай акаунт за достъп до клиентския панел.
+                                </p>
+
+                                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                                        <label asp-for="Input.UserName">Име</label>
+                                        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.FullName" class="form-control" autocomplete="fullname" aria-required="true" placeholder="" />
+                                        <label asp-for="Input.FullName">Пълно Име</label>
+                                        <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+                                        <label asp-for="Input.Email">Имейл адрес</label>
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                        <label asp-for="Input.Password">Парола</label>
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-floating mb-4">
+                                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                        <label asp-for="Input.ConfirmPassword">Потвърди паролата</label>
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </div>
+
+                                    <button id="registerSubmit" type="submit" class="w-100 btn identity-btn">
+                                        Създай профил
+                                    </button>
+
+                                    <div class="text-center mt-4">
+                                        <span class="text-muted">Вече имаш акаунт?</span>
+                                        <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="identity-link">
+                                            Вход
+                                        </a>
+                                    </div>
+                                </form>
+
+                                @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                                {
+                                    <hr class="my-4" />
+
+                                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                        <p class="text-muted mb-3">Или използвай външен акаунт:</p>
+
+                                        @foreach (var provider in Model.ExternalLogins!)
+                                        {
+                                            <button type="submit"
+                                                    class="btn btn-outline-primary rounded-4 me-2 mb-2"
+                                                    name="provider"
+                                                    value="@provider.Name"
+                                                    title="Регистрация с @provider.DisplayName">
+                                                @provider.DisplayName
+                                            </button>
+                                        }
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

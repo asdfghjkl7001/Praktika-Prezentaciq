@@ -1,0 +1,91 @@
+﻿@{
+    var path = Context.Request.Path.Value?.ToLower() ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> @ViewData["Title"] - Хартиен Обектив</title>
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body>
+
+    <header class="main-header">
+        
+        <a href="/" class="site-logo">
+            Хартиен Обектив
+        </a>
+
+        <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+
+        <label for="menu-toggle" class="menu-button">
+            ☰
+        </label>
+
+        <nav class="main-nav">
+            <a href="/" class="@(path == "/" ? "active" : "")">
+                Начало
+            </a>
+
+            <a href="/Services" class="@(path.StartsWith("/Services") ? "active" : "")">
+                Услуги
+            </a>
+
+            <a href="/Prodocts" class="@(path.StartsWith("/Prodocts") ? "active" : "")">
+                Фото продукти
+            </a>
+
+            <a class="nav-link text-dark" asp-controller="Home" asp-action="Prices">Цени</a>
+
+            <a class="nav-link text-dark" asp-controller="Home" asp-action="Contact">Контакти</a>
+                
+           
+           
+            
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <a href="/Identity/Account/Manage" class="nav-user">
+                    Профил
+                </a>
+
+                <form class="logout-form"
+                      asp-area="Identity"
+                      asp-page="/Account/Logout"
+                      asp-route-returnUrl="/"
+                      method="post">
+                    <button type="submit" class="logout-btn">
+                        Изход
+                    </button>
+                </form>
+            }
+            else
+            {
+                <a href="/Identity/Account/Login" class="nav-login">
+                    Вход
+                </a>
+
+                <a href="/Identity/Account/Register" class="nav-register">
+                    Регистрация
+                </a>
+            }
+           
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 Хартиен Обектив. Всички права запазени.</p>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
+<style >
+
+</style>

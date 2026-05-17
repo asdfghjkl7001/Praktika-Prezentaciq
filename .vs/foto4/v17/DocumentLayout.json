@@ -1,0 +1,239 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\views\\orders\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:views\\orders\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\views\\services\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:views\\services\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\data\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:data\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\views\\prodocts\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:views\\prodocts\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\views\\prodocts\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:views\\prodocts\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\controllers\\prodoctscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:controllers\\prodoctscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|c:\\users\\mol lester\\desktop\\diplomenpraktika-master\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{780A2095-309B-439A-B8F3-50FE291268B1}|Foto4DZI.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Orders\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Views\\Orders\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Orders\\Edit.cshtml",
+              "RelativeToolTip": "Views\\Orders\\Edit.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAqwCQAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T20:45:31.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAKcBAAAAAAAAAAAEwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-05-17T20:44:02.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T20:43:09.688Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CategoriesController.cs",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\CategoriesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CategoriesController.cs",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\CategoriesController.cs",
+              "RelativeToolTip": "Controllers\\CategoriesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T20:37:19.582Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ServicesController.cs",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\ServicesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ServicesController.cs",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\ServicesController.cs",
+              "RelativeToolTip": "Controllers\\ServicesController.cs",
+              "ViewState": "AgIAAKYBAAAAAAAAAAAAALABAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T20:35:56.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Service.cs",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Data\\Service.cs",
+              "RelativeDocumentMoniker": "Data\\Service.cs",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Data\\Service.cs",
+              "RelativeToolTip": "Data\\Service.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T20:35:36.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\OrdersController.cs",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\OrdersController.cs",
+              "RelativeToolTip": "Controllers\\OrdersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T20:26:36.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Prodocts\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Prodocts\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Prodocts\\Index.cshtml",
+              "RelativeToolTip": "Views\\Prodocts\\Index.cshtml",
+              "ViewState": "AgIAALUBAAAAAAAAAAAiwNoBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T20:02:46.927Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Services\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Services\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Services\\Index.cshtml",
+              "RelativeToolTip": "Views\\Services\\Index.cshtml",
+              "ViewState": "AgIAACgAAAAAAAAAAAAqwIwBAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T20:01:11.817Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Prodocts\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Prodocts\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Prodocts\\Details.cshtml",
+              "RelativeToolTip": "Views\\Prodocts\\Details.cshtml",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAqwA0AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T19:36:41.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAACoAAAAAAAAAAAAqwEQAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T19:34:38.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T19:21:13.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ProdoctsController.cs",
+              "DocumentMoniker": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\ProdoctsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProdoctsController.cs",
+              "ToolTip": "C:\\Users\\Mol Lester\\Desktop\\DiplomenPraktika-master\\Controllers\\ProdoctsController.cs",
+              "RelativeToolTip": "Controllers\\ProdoctsController.cs",
+              "ViewState": "AgIAAG4BAAAAAAAAAAAAAHgBAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T19:11:53.269Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

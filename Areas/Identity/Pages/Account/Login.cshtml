@@ -1,0 +1,144 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<link rel="stylesheet" href="~/css/identity-design.css" asp-append-version="true" />
+
+<div class="identity-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="identity-card">
+                    <div class="row g-0">
+                        <div class="col-lg-5">
+                            <div class="identity-side">
+                                <div class="identity-badge">
+                                    📸 Хартиен Обектив
+                                </div>
+
+                                <h1>Влез в своя профил</h1>
+
+                                <p>
+                                    Продължи към клиентския си панел, за да подадеш заявка,
+                                    да прикачиш файлове или да разгледаш услугите.
+                                </p>
+
+                                <div class="identity-feature">
+                                    <span>✓</span>
+                                    <div>Бърз достъп до заявки</div>
+                                </div>
+
+                                <div class="identity-feature">
+                                    <span>✓</span>
+                                    <div>Услуги за принтиране и копиране</div>
+                                </div>
+
+                                <div class="identity-feature">
+                                    <span>✓</span>
+                                    <div>Фото продукти и фотосесии</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <div class="identity-form">
+                                <h2>Вход</h2>
+                                <p class="subtitle">
+                                    Въведи имейл и парола, за да продължиш.
+                                </p>
+
+                                <form id="account" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.Email"
+                                               class="form-control"
+                                               autocomplete="username"
+                                               aria-required="true"
+                                               placeholder="name@example.com" />
+                                        <label asp-for="Input.Email">Имейл адрес</label>
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.Password"
+                                               class="form-control"
+                                               autocomplete="current-password"
+                                               aria-required="true"
+                                               placeholder="password" />
+                                        <label asp-for="Input.Password">Парола</label>
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                                            <label class="form-check-label" asp-for="Input.RememberMe">
+                                                Запомни ме
+                                            </label>
+                                        </div>
+
+                                        <a id="forgot-password"
+                                           asp-page="./ForgotPassword"
+                                           class="identity-link">
+                                            Забравена парола?
+                                        </a>
+                                    </div>
+
+                                    <button id="login-submit" type="submit" class="w-100 btn identity-btn">
+                                        Вход
+                                    </button>
+
+                                    <div class="text-center mt-4">
+                                        <span class="text-muted">Нямаш акаунт?</span>
+                                        <a asp-page="./Register"
+                                           asp-route-returnUrl="@Model.ReturnUrl"
+                                           class="identity-link">
+                                            Регистрация
+                                        </a>
+                                    </div>
+
+                                    <div class="text-center mt-2">
+                                        <a asp-page="./ResendEmailConfirmation" class="identity-link">
+                                            Изпрати отново потвърждение на имейл
+                                        </a>
+                                    </div>
+                                </form>
+
+                                @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                                {
+                                    <hr class="my-4" />
+
+                                    <form id="external-account"
+                                          asp-page="./ExternalLogin"
+                                          asp-route-returnUrl="@Model.ReturnUrl"
+                                          method="post">
+                                        <p class="text-muted mb-3">Или влез с външен акаунт:</p>
+
+                                        @foreach (var provider in Model.ExternalLogins!)
+                                        {
+                                            <button type="submit"
+                                                    class="btn btn-outline-primary rounded-4 me-2 mb-2"
+                                                    name="provider"
+                                                    value="@provider.Name"
+                                                    title="Вход с @provider.DisplayName">
+                                                @provider.DisplayName
+                                            </button>
+                                        }
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

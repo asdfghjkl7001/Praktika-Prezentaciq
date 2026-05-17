@@ -1,0 +1,185 @@
+﻿@using Foto4DZI.Areas.Identity.Pages.Account.Manage
+@inject SignInManager<Client> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<div class="manage-nav-card">
+    <div class="manage-nav-header">
+        <div class="manage-nav-icon">👤</div>
+        <div>
+            <h3>Настройки на профила</h3>
+            <p>Управление на акаунт, имейл и сигурност</p>
+        </div>
+    </div>
+
+    <ul class="nav nav-pills flex-column manage-nav-list">
+        <li class="nav-item">
+            <a class="nav-link manage-nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+                <span class="nav-link-icon">🏠</span>
+                <span>Профил</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link manage-nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">
+                <span class="nav-link-icon">✉️</span>
+                <span>Имейл</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link manage-nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">
+                <span class="nav-link-icon">🔒</span>
+                <span>Парола</span>
+            </a>
+        </li>
+
+        @if (hasExternalLogins)
+        {
+            <li id="external-logins" class="nav-item">
+                <a id="external-login" class="nav-link manage-nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">
+                    <span class="nav-link-icon">🌐</span>
+                    <span>Външни входове</span>
+                </a>
+            </li>
+        }
+
+        <li class="nav-item">
+            <a class="nav-link manage-nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">
+                <span class="nav-link-icon">🛡️</span>
+                <span>Двуфакторна защита</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link manage-nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">
+                <span class="nav-link-icon">📄</span>
+                <span>Лични данни</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<style>
+    .manage-nav-card {
+        background: #ffffff;
+        border-radius: 22px;
+        padding: 22px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e5e7eb;
+        position: sticky;
+        top: 20px;
+    }
+
+    .manage-nav-header {
+        background: linear-gradient(135deg, #111827, #374151);
+        color: #ffffff;
+        border-radius: 18px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+
+    .manage-nav-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+
+    .manage-nav-header h3 {
+        margin: 0 0 4px 0;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .manage-nav-header p {
+        margin: 0;
+        color: #e5e7eb;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .manage-nav-list {
+        gap: 10px;
+    }
+
+        .manage-nav-list .nav-item {
+            width: 100%;
+        }
+
+    .manage-nav-link {
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 15px !important;
+        border-radius: 14px !important;
+        color: #374151 !important;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+        .manage-nav-link:hover {
+            color: #2563eb !important;
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            transform: translateX(5px);
+        }
+
+        .manage-nav-link.active {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+            color: #ffffff !important;
+            border-color: #2563eb;
+            box-shadow: 0 8px 22px rgba(37, 99, 235, 0.25);
+        }
+
+            .manage-nav-link.active .nav-link-icon {
+                background: rgba(255, 255, 255, 0.18);
+            }
+
+    .nav-link-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        border-radius: 10px;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
+
+    @@media (max-width: 768px) {
+        .manage-nav-card {
+            position: static;
+            padding: 16px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .manage-nav-header {
+            padding: 16px;
+            border-radius: 15px;
+        }
+
+            .manage-nav-header h3 {
+                font-size: 18px;
+            }
+
+        .manage-nav-link {
+            padding: 12px 13px !important;
+        }
+    }
+</style>
